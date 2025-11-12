@@ -23,7 +23,7 @@ After completing the assignment, answer the following reflection questions:
 
 1. What are some things that you learned through this assignment? Think about the concepts of backtracking, constraint satisfaction, and search algorithms. Were there any particular challenges you faced while implementing the Board class methods or the DFS/BFS functions? How did you overcome them?
 
-
+I learned about DFS and BFS and how they can be applied. In Sudoku, every decision impacts the rest of the board. DFS required stacking while BFS required a queue, which was complicated. I just tested smaller puzzles as I was doing them to ensure that I was doing them correctly.
 
 2. How can you apply what you learned in this assignment to future programs or projects? Consider other types of problems that involve searching through possibilities, making decisions, and backtracking when those decisions don't work out. Can you think of real-world scenarios where DFS or BFS might be useful? What about other constraint satisfaction problems?
 
