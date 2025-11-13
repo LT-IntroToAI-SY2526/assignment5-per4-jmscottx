@@ -27,6 +27,9 @@ I learned about DFS and BFS and how they can be applied. In Sudoku, every decisi
 
 2. How can you apply what you learned in this assignment to future programs or projects? Consider other types of problems that involve searching through possibilities, making decisions, and backtracking when those decisions don't work out. Can you think of real-world scenarios where DFS or BFS might be useful? What about other constraint satisfaction problems?
 
+Learning DFS and BFS can help with scheduling, pathfinding, and solving puzzles/games.
 
 
 3. Explain how the Stack and Queue classes work and why they are important for DFS and BFS algorithms. Describe the difference between LIFO (Last In First Out) and FIFO (First In First Out) data structures. How does using a Stack versus a Queue change the way the search algorithm explores possible solutions? Why is one data structure better suited for depth-first search and the other for breadth-first search?
+
+Stack follows LIFO (last item is the first removed) and a queue follows FIFO (first item in is the first removed). BFS is the most ideal for finding the shortest path. Stacks may find a solution faster but BFS would give a better solution.

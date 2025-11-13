@@ -199,8 +199,9 @@ def DFS(state: Board) -> Board:
                 the_stack.push(new_board)
     return None
 
+from collections import deque
 
-def BFS(state: Board) -> Board:
+def BFS(state: Board) -> Board | None:
     """Performs a breadth first search. Takes a Board and attempts to assign values to
     most constrained cells until a solution is reached or a mistake has been made at
     which point it backtracks.
@@ -212,7 +213,32 @@ def BFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+
+    if state is None or not isinstance(state, Board):
+        return None
+
+    queue = deque([state])
+
+    while queue:
+        current = queue.popleft()
+
+        if current.is_solved():
+            return current
+
+        if not current.is_valid():
+            continue
+
+        cell = current.get_most_constrained_cell()
+        if cell is None:
+            continue
+
+        row, col = cell
+        for value in current.get_possible_values(row, col):
+            new_board = current.copy()
+            new_board.assign(row, col, value)
+            queue.append(new_board)
+
+    return None
 
 
 if __name__ == "__main__":
