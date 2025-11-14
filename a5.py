@@ -1,6 +1,6 @@
 import copy  # to make a deepcopy of the board
 from typing import List, Any, Tuple
-
+import time
 # import Stack and Queue classes for BFS/DFS
 from stack_and_queue import Stack, Queue
 
@@ -183,25 +183,31 @@ def DFS(state: Board) -> Board:
     """
     the_stack = Stack()
     the_stack.push(state)
+    iterations = 0
+    start_time = time.time()
 
     while not the_stack.is_empty():
+        iterations += 1
+        # print(the_stack)
         current_board: Board = the_stack.pop()
-        print(current_board)
+        # print(current_board)
         if current_board.goal_test():
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"DFS took {iterations} iterations in {elapsed_time: .4f} seconds")
             return current_board
-        row, col = current_board.find_most_constrained_cell()
-        possible_values = current_board.rows[row][col]
-        print(row, col, possible_values)
         if not current_board.failure_test():
+            row, col = current_board.find_most_constrained_cell()
+            # print(row, col)
+            possible_values = current_board.rows[row][col]
+            # print(possible_values)
             for val in possible_values:
-                new_board = copy.deepcopy(current_board)
+                new_board: Board = copy.deepcopy(current_board)
                 new_board.update(row, col, val)
                 the_stack.push(new_board)
     return None
 
-from collections import deque
-
-def BFS(state: Board) -> Board | None:
+def BFS(state: Board) -> Board:
     """Performs a breadth first search. Takes a Board and attempts to assign values to
     most constrained cells until a solution is reached or a mistake has been made at
     which point it backtracks.
@@ -213,30 +219,25 @@ def BFS(state: Board) -> Board | None:
     Returns:
         either None in the case of invalid input or a solved board
     """
+    the_queue = Queue([state])
+    iterations = 0
+    start_time = time.time()
 
-    if state is None or not isinstance(state, Board):
-        return None
-
-    queue = deque([state])
-
-    while queue:
-        current = queue.popleft()
-
-        if current.is_solved():
-            return current
-
-        if not current.is_valid():
-            continue
-
-        cell = current.get_most_constrained_cell()
-        if cell is None:
-            continue
-
-        row, col = cell
-        for value in current.get_possible_values(row, col):
-            new_board = current.copy()
-            new_board.assign(row, col, value)
-            queue.append(new_board)
+    while not the_queue.is_empty():
+        iterations += 1
+        current_board: Board = the_queue.pop()
+        if current_board.goal_test():
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"BFS took {iterations} iterations in {elapsed_time: .4f} seconds")
+            return current_board
+        row, col = current_board.find_most_constrained_cell()
+        possible_values = current_board.rows[row][col]
+        if not current_board.failure_test():
+            for val in possible_values:
+                new_board = copy.deepcopy(current_board)
+                new_board.update(row, col, val)
+                the_queue.push(new_board)
 
     return None
 
